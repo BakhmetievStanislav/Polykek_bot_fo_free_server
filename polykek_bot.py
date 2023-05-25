@@ -394,7 +394,6 @@ if __name__ == '__main__':
         if teacher_id == -1:
             msg1 = bot.send_message(
                 msg.chat.id, phrases['name err'], parse_mode='html')
-            bot.register_next_step_handler(msg1, show_teacher_schedule)
 
         message = bot.send_message(
             msg.chat.id, phrases['мое расписание'], parse_mode='html')
