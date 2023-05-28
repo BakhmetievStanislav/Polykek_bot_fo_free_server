@@ -255,17 +255,20 @@ if __name__ == '__main__':
         delta_reminder_time = delta_time(reminder_time)
         if delta_reminder_time != -1:
             if delta_reminder_time < 0:
-                reminder_text = f"{phrases['date passed']}Напоминаю \U0001F99D\n{reminder_text}"
-            timer = Timer(delta_reminder_time,
-                          send_remind_message, [user_name, reminder_time, reminder_text])
-            timer.start()
-            note = add_new_note(user_name, reminder_time, reminder_text)
-            if note:
+                new_reminder_text = f"{phrases['date passed']}Напоминаю \U0001F99D\n{reminder_text}"
                 bot.send_message(
-                    user_name, phrases['will remind'], parse_mode='html')
+                    message.chat.id, new_reminder_text, parse_mode='html')
             else:
-                bot.send_message(
-                    user_name, phrases["сервер"], parse_mode='html')
+                timer = Timer(delta_reminder_time,
+                              send_remind_message, [user_name, reminder_time, reminder_text])
+                timer.start()
+                note = add_new_note(user_name, reminder_time, reminder_text)
+                if note:
+                    bot.send_message(
+                        user_name, phrases['will remind'], parse_mode='html')
+                else:
+                    bot.send_message(
+                        user_name, phrases["сервер"], parse_mode='html')
         else:
             bot.send_message(
                 message.chat.id, phrases['date err'], parse_mode='html')
@@ -394,6 +397,7 @@ if __name__ == '__main__':
         if teacher_id == -1:
             msg1 = bot.send_message(
                 msg.chat.id, phrases['name err'], parse_mode='html')
+            bot.register_next_step_handler(msg1, show_teacher_schedule)
 
         message = bot.send_message(
             msg.chat.id, phrases['мое расписание'], parse_mode='html')

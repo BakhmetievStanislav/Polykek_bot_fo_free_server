@@ -14,13 +14,12 @@ def get_today_date() -> str:
 
 
 # Напоминалка
-# Считаем относительно сервера
 def delta_time(reminder_time: str) -> float:
     try:
         [year, month, day, hour, minute] = map(int, reminder_time.split('.'))
         delta = datetime.datetime(
-            year, month, day, hour, minute) - (datetime.datetime.now() + 10800)
-        return delta.total_seconds()
+            year, month, day, hour, minute) - datetime.datetime.now()
+        return delta.total_seconds() - 10800
     except:
         return -1
 
@@ -47,7 +46,7 @@ def number_of_day_in_week(date_str: str) -> int:
 
 
 # Получение времени до 18:00
-# Так как на сервере на 3 часа меньше, получаем 15:00
+# Считаем относительно сервера
 def get_six_oclock() -> int:
     today = datetime.datetime.now().strftime("%Y.%m.%d.%H.%M")
     [year, month, day, hour, minute] = map(int, today.split('.'))
