@@ -43,7 +43,7 @@ def get_weather(city: str, open_weather_token: str) -> str:
 
         humidity = weather_json["main"]["humidity"]
         wind = weather_json["wind"]["speed"]
-        time_zone = weather_json["timezone"] - 10800
+        time_zone = weather_json["timezone"]
         local_time = datetime.datetime.fromtimestamp(
             time.time() + time_zone).strftime("%Y-%m-%d %H:%M:%S")
         sunrise = datetime.datetime.fromtimestamp(
